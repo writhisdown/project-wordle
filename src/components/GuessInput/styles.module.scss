@@ -1,0 +1,30 @@
+.guess-input-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+label,
+.guess-input {
+  font-weight: 600;
+}
+
+.guess-input {
+  height: 50px;
+  width: 250px;
+  padding-inline: 0.75rem;
+  border: 2px solid var(--color-gray-500);
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+
+  &:focus {
+    outline: 2px solid var(--color-blue-300);
+    outline-offset: 0.125rem;
+  }
+}
+
+.guess-input__error-container {
+  width: 250px;
+  min-height: 25px;
+}
