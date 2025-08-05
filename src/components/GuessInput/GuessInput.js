@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import ErrorMessage from '../ErrorMessage';
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
 function GuessInput({ resultsList, setResultsList }) {
   const [guessValue, setGuessValue] = React.useState('');
@@ -29,14 +30,20 @@ function GuessInput({ resultsList, setResultsList }) {
     event.preventDefault();
     console.log('guessed value:', guessValue);
 
-    const guessObj = {
-      result: guessValue,
-      id: crypto.randomUUID(),
-    }
+    // const guessObj = {
+    //   result: guessValue,
+    //   id: crypto.randomUUID(),
+    // }
 
     const guessResults = [...resultsList];
 
-    guessResults.push(guessObj);
+    if (guessResults.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGuessValue('');
+      return;
+    }
+ 
+    // guessResults.push(guessObj);
+    guessResults.push(guessValue);
     
     setResultsList(guessResults);
 

@@ -1,0 +1,65 @@
+@import '../../mixins/text-trim.scss';
+
+.guess {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.cell {
+  position: relative;
+  width: 20%;
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1 / 1;
+  border: 2px solid var(--color-gray-700);
+  border-radius: var(--radius);
+  font-size: 2rem;
+
+  // prevent guess row layout shift
+  // for firefox fix text alignment issue
+  // note: text-box-trim does not work as expected do to the nature
+  // of grid and /or flexbox - will need to revisit this 
+  @include text-trim(2rem, $caps: true);
+}
+
+
+// Round the corners for the 4 cells at the very corners of
+// the game board
+.guess:first-of-type .cell:first-of-type {
+  --radius: 4px 0px 0px 0px;
+}
+
+.guess:first-of-type .cell:last-of-type {
+  --radius: 0px 4px 0px 0px;
+}
+
+.guess:last-of-type .cell:last-of-type {
+  --radius: 0px 0px 4px 0px;
+}
+
+.guess:last-of-type .cell:first-of-type {
+  --radius: 0px 0px 0px 4px;
+}
+
+.cell.correct,
+.cell.incorrect,
+.cell.misplaced {
+  color: white;
+}
+
+.cell.correct {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.cell.incorrect {
+  background: var(--color-gray-300);
+  border-color: var(--color-gray-300);
+}
+
+.cell.misplaced {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+}

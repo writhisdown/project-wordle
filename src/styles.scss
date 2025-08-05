@@ -86,28 +86,29 @@ h1 {
 }
 
 .guess-results {
-  // flex: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.guess {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 4px;
-}
+// .guess {
+//   display: flex;
+//   gap: 4px;
+//   margin-bottom: 4px;
+// }
 
-.cell {
-  position: relative;
-  width: 20%;
-  display: grid;
-  place-content: center;
-  aspect-ratio: 1 / 1;
-  border: 2px solid var(--color-gray-700);
-  border-radius: var(--radius);
-  font-size: 2rem;
-}
+// .cell {
+//   position: relative;
+//   width: 20%;
+//   min-height: 100%;
+//   display: grid;
+//   place-content: center;
+//   aspect-ratio: 1 / 1;
+//   border: 2px solid var(--color-gray-700);
+//   border-radius: var(--radius);
+//   font-size: 2rem;
+// }
 
 /*
   Round the corners for the 4 cells at the very corners of

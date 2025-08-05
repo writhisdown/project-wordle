@@ -1,0 +1,16 @@
+@mixin text-trim($size, $caps: false) {
+  @supports not (text-box-trim: trim-both) {
+    line-height: calc($size * .75);
+    padding-top: .25rem;
+  }
+
+  @supports (text-box-trim: trim-both) {
+    text-box-trim: trim-both;
+  }
+
+  @if $caps {
+    @supports (text-box-edge: cap alphabetic) {
+      text-box-edge: cap alphabetic;
+    }
+  } 
+}
