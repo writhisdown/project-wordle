@@ -1,0 +1,35 @@
+@import '../../styles/animations/animations.scss';
+
+.banner {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px;
+  text-align: center;
+  animation: slideUp 750ms cubic-bezier(0, 0.72, 0.24, 1.02);
+  border-radius: 4px 4px 0px 0px;
+  will-change: transform;
+
+  span {
+    font-weight: 600;
+  }
+}
+
+.banner:popover-open {
+  display: grid;
+  align-self: end;
+  animation: slideUp 500ms ease-in-out;
+}
+
+.happy,
+.sad {
+  color: white;
+}
+
+.banner.happy {
+  background: var(--color-success);
+}
+
+.banner.sad {
+  background: var(--color-error-300);
+}

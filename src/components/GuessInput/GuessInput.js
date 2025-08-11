@@ -3,11 +3,10 @@ import styles from './styles.module.scss';
 import ErrorMessage from '../ErrorMessage';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
-function GuessInput({ resultsList, setResultsList }) {
+function GuessInput({ resultsList, setResultsList, answer, setBannerVisible }) {
   const [guessValue, setGuessValue] = React.useState('');
   const [error, setError] = React.useState(false);
-
-  console.log(error)
+  const [isDisabled, setIsDisabled] = React.useState(false);
 
   const EMPTY_TEXT = 'This field cannot be empty';
   const INVALID_TEXT = 'This field should have no more and no less than five characters';
@@ -18,34 +17,33 @@ function GuessInput({ resultsList, setResultsList }) {
     const inputValue = event.target.value;
     
     setGuessValue(inputValue.toUpperCase());
-    
-    console.log('input value length:', inputValue.length);
-    
+        
     if (inputValue.length === 5) {
       setError(false);
     }
   }
 
+  function endGame(inputs) {
+    const isMatch = inputs.find((input) => input === answer);
+    const correctAnswer = !!(inputs.length <= NUM_OF_GUESSES_ALLOWED && isMatch);
+    const incorrectAnswer = !!(inputs.length === NUM_OF_GUESSES_ALLOWED && !isMatch);
+
+    if (incorrectAnswer || correctAnswer) {
+      setBannerVisible(true);
+      setIsDisabled(true);
+    }
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('guessed value:', guessValue);
-
-    // const guessObj = {
-    //   result: guessValue,
-    //   id: crypto.randomUUID(),
-    // }
 
     const guessResults = [...resultsList];
-
-    if (guessResults.length >= NUM_OF_GUESSES_ALLOWED) {
-      setGuessValue('');
-      return;
-    }
  
-    // guessResults.push(guessObj);
     guessResults.push(guessValue);
     
     setResultsList(guessResults);
+
+    endGame(guessResults);
 
     setGuessValue('');
   }
@@ -70,6 +68,7 @@ function GuessInput({ resultsList, setResultsList }) {
         pattern='[A-Z]{5,5}'
         required
         onInvalid={handleError}
+        disabled={isDisabled}
       />
       <div className={styles['guess-input__error-container']}>
         {error && (
