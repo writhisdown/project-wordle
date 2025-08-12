@@ -1,12 +1,10 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import ErrorMessage from '../ErrorMessage';
-import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
-function GuessInput({ resultsList, setResultsList, answer, setBannerVisible }) {
+function GuessInput({ handleSubmittedGuesses, gameStatus }) {
   const [guessValue, setGuessValue] = React.useState('');
   const [error, setError] = React.useState(false);
-  const [isDisabled, setIsDisabled] = React.useState(false);
 
   const EMPTY_TEXT = 'This field cannot be empty';
   const INVALID_TEXT = 'This field should have no more and no less than five characters';
@@ -23,27 +21,10 @@ function GuessInput({ resultsList, setResultsList, answer, setBannerVisible }) {
     }
   }
 
-  function endGame(inputs) {
-    const isMatch = inputs.find((input) => input === answer);
-    const correctAnswer = !!(inputs.length <= NUM_OF_GUESSES_ALLOWED && isMatch);
-    const incorrectAnswer = !!(inputs.length === NUM_OF_GUESSES_ALLOWED && !isMatch);
-
-    if (incorrectAnswer || correctAnswer) {
-      setBannerVisible(true);
-      setIsDisabled(true);
-    }
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
 
-    const guessResults = [...resultsList];
- 
-    guessResults.push(guessValue);
-    
-    setResultsList(guessResults);
-
-    endGame(guessResults);
+    handleSubmittedGuesses(guessValue);
 
     setGuessValue('');
   }
@@ -68,7 +49,7 @@ function GuessInput({ resultsList, setResultsList, answer, setBannerVisible }) {
         pattern='[A-Z]{5,5}'
         required
         onInvalid={handleError}
-        disabled={isDisabled}
+        disabled={gameStatus !== 'running'}
       />
       <div className={styles['guess-input__error-container']}>
         {error && (

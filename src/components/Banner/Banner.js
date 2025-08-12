@@ -1,27 +1,27 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-function StatusBanner({ isVisible, gameStatus, attempts, answer }) {
+function Banner({ status, attempts, answer }) {
   const dialogRef = React.useRef();
   const dialogElement = dialogRef.current;
-
+  
   React.useEffect(() => {
     if (!dialogElement) return;
 
-    if (isVisible) {
+    if (status !== 'running') {
       dialogElement?.showPopover();
     } else {
       dialogElement?.close();
     }
-  }, [isVisible]);
+  }, [status]);
 
   return (
     <dialog 
       popover=''
       ref={dialogRef}
-      className={`${styles.banner} ${gameStatus ? styles.happy : styles.sad}`}
+      className={`${styles.banner} ${status === 'win' ? styles.happy : styles.sad}`}
     >
-      {gameStatus ? (
+      {status === 'win' ? (
         <p>
           <span>Congratulations!</span> Got it in <span>{attempts} {attempts > 1 ? 'guesses' : 'guess'}</span>.
         </p>
@@ -34,4 +34,4 @@ function StatusBanner({ isVisible, gameStatus, attempts, answer }) {
   );
 }
 
-export default StatusBanner;
+export default Banner;
